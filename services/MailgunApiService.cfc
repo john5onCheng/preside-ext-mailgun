@@ -46,6 +46,7 @@ component {
 		,           string openTracking      = ""
 		,           struct customHeaders     = {}
 		,           struct customVariables   = {}
+		,           struct recipientVariables = {}
 	){
 
 		var results    = "";
@@ -107,6 +108,10 @@ component {
 
 		for( var key in arguments.customVariables ){
 			postVars[ "v:#key#" ] = arguments.customVariables[ key ];
+		}
+
+		if( !structIsEmpty( arguments.recipientVariables ) ){
+			postVars[ "recipient-variables" ] = serializeJSON( arguments.recipientVariables );
 		}
 
 		if ( ArrayLen( arguments.attachments ) ) {
